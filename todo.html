@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>To-Do</title>
+    </head>
+    <body>
+        <div id="todo">
+
+        </div>
+        <script type="text/babel">
+            class App extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = {
+                        tasks: [],
+                        input: "sss"
+                    }
+                }
+
+                render() {
+                  return(
+                  <div>
+                    <h1>Tasks:</h1>
+                    <ul>
+                      {this.state.tasks.map((task,i) =>
+                        <li key = {i}>
+                          <button onClick={ () => this.deleteTask(i) }>sil</button>
+                          {task}
+                        </li>
+                      )}
+                    </ul>
+                    <div>
+                      <input onChange={this.handleChange} value={this.state.input} />
+                      <button onClick={this.addTask}>Add New Task</button>
+                    </div>
+                    <h3>NUMBER OF TASKS: {this.state.tasks.length}</h3>
+                </div>
+              )}
+              addTask = () =>{
+                this.setState(state => ({
+                  tasks: [...state.tasks, state.input ],
+                  input: ""
+                }))
+              }
+                handleChange = (event) => {
+                  this.setState({
+                    input: event.target.value
+                  })
+                }
+
+                deleteTask = (index) =>{
+                  this.setState(state => {
+                    const tasks = [...this.state.tasks]
+                    tasks.splice(index,1)
+                    return{
+                    tasks: tasks
+                  }
+                  })
+                }
+
+            }
+
+            ReactDOM.render((
+                <div>
+                    <App />
+                </div>
+            ), document.querySelector("#todo"))
+        </script>
+    </body>
+</html>
